@@ -421,30 +421,25 @@ var resizePizzas = function (size) {
 
     changeSliderLabel(size);
 
-    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-    function getPizzaSize(size) {
-            switch (size) {
-                case "1":
-                    newWidth = 0.25;
-                    break;
-                case "2":
-                    newWidth =  0.3333;
-                    break;
-                case "3":
-                    newWidth = 0.5;
-                    break;
-                default:
-                    newWidth = 0.25;
-            }
-        return newWidth;
-    }
-
     // Iterates through pizza elements on the page and changes their widths
     function changePizzaSizes(size) {
         var containerElements = document.querySelectorAll(".randomPizzaContainer");
-        var newwidth = getPizzaSize(size);
+        switch (size) {
+            case "1":
+                newWidth = 25;
+                break;
+            case "2":
+                newWidth =  33.33;
+                break;
+            case "3":
+                newWidth = 50;
+                break;
+            default:
+                console.log("bug");
+        }
+
         for (var i = 0; i < containerElements.length; i++) {
-            containerElements[i].style.width = newwidth;
+            containerElements[i].style.width = newWidth + "%";
         }
     }
 
@@ -493,10 +488,16 @@ function updatePositions() {
     frame++;
     window.performance.mark("mark_start_frame");
 
-    var items = document.querySelectorAll('.mover');
+    var items = document.getElementsByClassName('mover');
+    var top = document.body.scrollTop;
+    var constantArray = [];
+
+    for(var j=0;j<5;j++) {
+        constantArray.push(Math.sin(top / 1250) + j);
+    }
+
     for (var i = 0; i < items.length; i++) {
-        var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-        items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+        items[i].style.left = items[i].basicLeft + 100 * constantArray[i % 5] + 'px';
     }
 
     // User Timing API to the rescue again. Seriously, it's worth learning.
