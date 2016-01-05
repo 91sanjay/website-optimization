@@ -514,7 +514,7 @@ function updatePositions() {
 
     // Generate a constant array of postions instead of evaluating each time
     for (var j = 0; j < 5; j++) {
-        constantArray.push(Math.sin(top / 1250) + j);
+        constantArray.push(Math.sin(top / 1250 + j));
     }
 
     for (var i = 0, len = items.length; i < len; i++) {
